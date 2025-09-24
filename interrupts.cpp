@@ -22,6 +22,8 @@ int main(int argc, char **argv)
     /******************ADD YOUR VARIABLES HERE*************************/
 
     // Track current time
+    int current_time = 0;
+    const int CONTEXT_SAVE_TIME = 10;
 
     /******************************************************************/
 
@@ -31,6 +33,20 @@ int main(int argc, char **argv)
         auto [activity, duration_intr] = parse_trace(trace);
 
         /******************ADD YOUR SIMULATION CODE HERE*************************/
+        // std::cout << activity << " " << duration_intr << std::endl;
+
+        if (activity == "CPU")
+        {
+            std::cout << current_time << ", " << duration_intr << ", CPU Burst" << std::endl;
+            current_time += duration_intr;
+        }
+        else
+        {
+            auto address = vectors.at(duration_intr);
+            auto [execution, new_time] = intr_boilerplate(current_time, duration_intr, CONTEXT_SAVE_TIME, vectors);
+            std::cout << execution << std::endl;
+            current_time = new_time;
+        }
 
         // Use activity to determine if I/O or not
         // If I/O:
