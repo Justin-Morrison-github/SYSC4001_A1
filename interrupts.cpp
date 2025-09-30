@@ -24,6 +24,9 @@ int main(int argc, char **argv)
     // Track current time
     int current_time = 0;
     const int CONTEXT_SAVE_TIME = 10;
+    const int IRET_RETURN_TIME = 1;
+    const int ISR_EXECUTE_TIME = 40;
+    char buffer[64]; // Buffer to store strings
 
     /******************************************************************/
 
@@ -40,6 +43,8 @@ int main(int argc, char **argv)
         {
             // If not IO: increment current_time by duration_intr
             std::cout << current_time << ", " << duration_intr << ", CPU Burst" << std::endl;
+            sprintf(buffer, "%d, %d, CPU Burst\n", current_time, duration_intr);
+            execution += std::string(buffer);
             current_time += duration_intr;
         }
         else
@@ -49,6 +54,16 @@ int main(int argc, char **argv)
             auto [execution_string, new_time] = intr_boilerplate(current_time, duration_intr, CONTEXT_SAVE_TIME, vectors);
             execution += execution_string;
             current_time = new_time;
+
+            // Execute ISR
+            sprintf(buffer, "%d, %d, Execute ISR at address %d\n", current_time, ISR_EXECUTE_TIME, duration_intr);
+            execution += std::string(buffer);
+            current_time += ISR_EXECUTE_TIME;
+
+            // Execute IRET
+            sprintf(buffer, "%d, %d, IRET\n", current_time, IRET_RETURN_TIME);
+            execution += std::string(buffer);
+            current_time += IRET_RETURN_TIME;
         }
 
         /************************************************************************/
