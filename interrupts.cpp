@@ -35,30 +35,21 @@ int main(int argc, char **argv)
         /******************ADD YOUR SIMULATION CODE HERE*************************/
         // std::cout << activity << " " << duration_intr << std::endl;
 
+        // Use activity to determine if I/O or not
         if (activity == "CPU")
         {
+            // If not IO: increment current_time by duration_intr
             std::cout << current_time << ", " << duration_intr << ", CPU Burst" << std::endl;
             current_time += duration_intr;
         }
         else
         {
+            // If I/O: Device number=duration_intr, use as index into vectors to find address of ISR and into delays to find context save time
             auto address = vectors.at(duration_intr);
-            auto [execution, new_time] = intr_boilerplate(current_time, duration_intr, CONTEXT_SAVE_TIME, vectors);
-            std::cout << execution << std::endl;
+            auto [execution_string, new_time] = intr_boilerplate(current_time, duration_intr, CONTEXT_SAVE_TIME, vectors);
+            execution += execution_string;
             current_time = new_time;
         }
-
-        // Use activity to determine if I/O or not
-        // If I/O:
-        // Use duration_intr as index into vectors to find address of ISR
-        // Use duration_intr as index into delays to find context save time
-        // Pass the current time, duration_intr as int_num, context save time, and vectors to intr_boilerplate()
-
-        // If not IO
-        // increment current_time by duration_intr
-
-        // pass execution string return from intr_boilerplate() to write_output()
-        // update current time
 
         /************************************************************************/
     }
