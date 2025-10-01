@@ -23,10 +23,11 @@ int main(int argc, char **argv)
 
     // Track current time
     int current_time = 0;
-    const int CONTEXT_SAVE_TIME = 10;
+    const int CONTEXT_SWITCH_TIME = 10;
     const int IRET_RETURN_TIME = 1;
-    const int ISR_EXECUTE_TIME = 40;
+    const int ISR_EXECUTE_TIME = 0;
     char buffer[64]; // Buffer to store strings
+    int delay;
 
     /******************************************************************/
 
@@ -36,34 +37,51 @@ int main(int argc, char **argv)
         auto [activity, duration_intr] = parse_trace(trace);
 
         /******************ADD YOUR SIMULATION CODE HERE*************************/
-        // std::cout << activity << " " << duration_intr << std::endl;
 
         // Use activity to determine if I/O or not
         if (activity == "CPU")
         {
             // If not IO: increment current_time by duration_intr
-            std::cout << current_time << ", " << duration_intr << ", CPU Burst" << std::endl;
             sprintf(buffer, "%d, %d, CPU Burst\n", current_time, duration_intr);
             execution += std::string(buffer);
             current_time += duration_intr;
         }
         else
         {
-            // If I/O: Device number=duration_intr, use as index into vectors to find address of ISR and into delays to find context save time
+            // SYSCALL or END_IO: Device number=duration_intr, use as index into vectors to find address of ISR and into delays to find delay time
             auto address = vectors.at(duration_intr);
-            auto [execution_string, new_time] = intr_boilerplate(current_time, duration_intr, CONTEXT_SAVE_TIME, vectors);
+            auto [execution_string, new_time] = intr_boilerplate(current_time, duration_intr, CONTEXT_SWITCH_TIME, vectors);
             execution += execution_string;
             current_time = new_time;
+            delay = delays.at(duration_intr);
 
-            // Execute ISR
-            sprintf(buffer, "%d, %d, Execute ISR at address %d\n", current_time, ISR_EXECUTE_TIME, duration_intr);
-            execution += std::string(buffer);
-            current_time += ISR_EXECUTE_TIME;
+            if (activity == "SYSCALL")
+            {
+                // Execute SYSCALL
+                execution += std::to_string(current_time) + ", " + std::to_string(delay + ISR_EXECUTE_TIME) + ", " + "Execute SYSCALL\n";
+                current_time += delay + ISR_EXECUTE_TIME; // Add overhead for ISR execution time for testing
+            }
+            else if (activity == "END_IO")
+            {
+                // Execute ISR
+                execution += std::to_string(current_time) + ", " + std::to_string(delay + ISR_EXECUTE_TIME) + ", " + "Execute END_IO ISR at device number " + std::to_string(duration_intr) + "\n";
+                current_time += delay + ISR_EXECUTE_TIME; // Add overhead for ISR execution time for testing
+            }
 
             // Execute IRET
             sprintf(buffer, "%d, %d, IRET\n", current_time, IRET_RETURN_TIME);
             execution += std::string(buffer);
             current_time += IRET_RETURN_TIME;
+
+            // Restore context
+            sprintf(buffer, "%d, %d, Restore context\n", current_time, CONTEXT_SWITCH_TIME);
+            execution += std::string(buffer);
+            current_time += CONTEXT_SWITCH_TIME;
+
+            // Execute IRET
+            sprintf(buffer, "%d, %d, Switch to user mode\n", current_time, 1);
+            execution += std::string(buffer);
+            current_time += 1;
         }
 
         /************************************************************************/
