@@ -78,7 +78,7 @@ int main(int argc, char **argv)
             execution += std::string(buffer);
             current_time += CONTEXT_SWITCH_TIME;
 
-            // Execute IRET
+            // Switch back to user
             sprintf(buffer, "%d, %d, Switch to user mode\n", current_time, 1);
             execution += std::string(buffer);
             current_time += 1;
