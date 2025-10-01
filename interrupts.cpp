@@ -41,7 +41,6 @@ int main(int argc, char **argv)
         // Use activity to determine if I/O or not
         if (activity == "CPU")
         {
-            // If not IO: increment current_time by duration_intr
             sprintf(buffer, "%d, %d, CPU Burst\n", current_time, duration_intr);
             execution += std::string(buffer);
             current_time += duration_intr;
@@ -57,16 +56,13 @@ int main(int argc, char **argv)
 
             if (activity == "SYSCALL")
             {
-                // Execute SYSCALL
                 execution += std::to_string(current_time) + ", " + std::to_string(delay + ISR_EXECUTE_TIME) + ", " + "Execute SYSCALL\n";
-                current_time += delay + ISR_EXECUTE_TIME; // Add overhead for ISR execution time for testing
             }
             else if (activity == "END_IO")
             {
-                // Execute ISR
                 execution += std::to_string(current_time) + ", " + std::to_string(delay + ISR_EXECUTE_TIME) + ", " + "Execute END_IO ISR at device number " + std::to_string(duration_intr) + "\n";
-                current_time += delay + ISR_EXECUTE_TIME; // Add overhead for ISR execution time for testing
             }
+            current_time += delay + ISR_EXECUTE_TIME; // Add overhead for ISR execution time for testing
 
             // Execute IRET
             sprintf(buffer, "%d, %d, IRET\n", current_time, IRET_RETURN_TIME);
