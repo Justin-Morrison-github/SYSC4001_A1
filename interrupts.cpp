@@ -24,7 +24,7 @@ int main(int argc, char **argv)
     // Track current time
     int current_time = 0;
     const int CONTEXT_SWITCH_TIME = 10;
-    const int IRET_RETURN_TIME = 1;
+    const int IRET_RETURN_TIME = 10;
     const int ISR_EXECUTE_TIME = 40;
     const int DATA_TRANSFER_TIME = 200;
     char buffer[64]; // Buffer to store strings
@@ -61,7 +61,7 @@ int main(int argc, char **argv)
                 current_time += ISR_EXECUTE_TIME;
                 execution += std::to_string(current_time) + ", " + std::to_string(DATA_TRANSFER_TIME) + ", transfer data from device to memory\n";
                 current_time += DATA_TRANSFER_TIME;
-                delay -= DATA_TRANSFER_TIME;
+                delay -= DATA_TRANSFER_TIME; // Remove the DATA_TRANSFER_TIME from like the example does
                 execution += std::to_string(current_time) + ", " + std::to_string(delay - ISR_EXECUTE_TIME) + ", check for errors\n";
             }
             else if (activity == "END_IO")
