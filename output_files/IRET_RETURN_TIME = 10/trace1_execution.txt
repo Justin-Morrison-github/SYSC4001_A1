@@ -1,0 +1,106 @@
+0, 75, CPU Burst
+75, 1, switch to kernel mode
+76, 10, context saved
+86, 1, find vector 5 in memory position 0x000A
+87, 1, load address 0X048B into the PC
+88, 40, SYSCALL: run the ISR 5
+128, 40, transfer data from device to memory
+168, 131, check for errors
+299, 10, IRET
+309, 10, Restore context
+319, 1, Switch to user mode
+320, 84, CPU Burst
+404, 1, switch to kernel mode
+405, 10, context saved
+415, 1, find vector 5 in memory position 0x000A
+416, 1, load address 0X048B into the PC
+417, 40, END_IO: run the ISR 5
+417, 171, check device status
+588, 10, IRET
+598, 10, Restore context
+608, 1, Switch to user mode
+609, 22, CPU Burst
+631, 1, switch to kernel mode
+632, 10, context saved
+642, 1, find vector 10 in memory position 0x0014
+643, 1, load address 0X07B0 into the PC
+644, 40, SYSCALL: run the ISR 10
+684, 40, transfer data from device to memory
+724, 484, check for errors
+1208, 10, IRET
+1218, 10, Restore context
+1228, 1, Switch to user mode
+1229, 80, CPU Burst
+1309, 1, switch to kernel mode
+1310, 10, context saved
+1320, 1, find vector 10 in memory position 0x0014
+1321, 1, load address 0X07B0 into the PC
+1322, 40, END_IO: run the ISR 10
+1322, 524, check device status
+1846, 10, IRET
+1856, 10, Restore context
+1866, 1, Switch to user mode
+1867, 79, CPU Burst
+1946, 1, switch to kernel mode
+1947, 10, context saved
+1957, 1, find vector 6 in memory position 0x000C
+1958, 1, load address 0X0639 into the PC
+1959, 40, SYSCALL: run the ISR 6
+1999, 40, transfer data from device to memory
+2039, 185, check for errors
+2224, 10, IRET
+2234, 10, Restore context
+2244, 1, Switch to user mode
+2245, 68, CPU Burst
+2313, 1, switch to kernel mode
+2314, 10, context saved
+2324, 1, find vector 6 in memory position 0x000C
+2325, 1, load address 0X0639 into the PC
+2326, 40, END_IO: run the ISR 6
+2326, 225, check device status
+2551, 10, IRET
+2561, 10, Restore context
+2571, 1, Switch to user mode
+2572, 71, CPU Burst
+2643, 1, switch to kernel mode
+2644, 10, context saved
+2654, 1, find vector 4 in memory position 0x0008
+2655, 1, load address 0X0292 into the PC
+2656, 40, SYSCALL: run the ISR 4
+2696, 40, transfer data from device to memory
+2736, 170, check for errors
+2906, 10, IRET
+2916, 10, Restore context
+2926, 1, Switch to user mode
+2927, 97, CPU Burst
+3024, 1, switch to kernel mode
+3025, 10, context saved
+3035, 1, find vector 4 in memory position 0x0008
+3036, 1, load address 0X0292 into the PC
+3037, 40, END_IO: run the ISR 4
+3037, 210, check device status
+3247, 10, IRET
+3257, 10, Restore context
+3267, 1, Switch to user mode
+3268, 84, CPU Burst
+3352, 1, switch to kernel mode
+3353, 10, context saved
+3363, 1, find vector 7 in memory position 0x000E
+3364, 1, load address 0X00BD into the PC
+3365, 40, SYSCALL: run the ISR 7
+3405, 40, transfer data from device to memory
+3445, 72, check for errors
+3517, 10, IRET
+3527, 10, Restore context
+3537, 1, Switch to user mode
+3538, 38, CPU Burst
+3576, 1, switch to kernel mode
+3577, 10, context saved
+3587, 1, find vector 7 in memory position 0x000E
+3588, 1, load address 0X00BD into the PC
+3589, 40, END_IO: run the ISR 7
+3589, 112, check device status
+3701, 10, IRET
+3711, 10, Restore context
+3721, 1, Switch to user mode
+3722, 90, CPU Burst
