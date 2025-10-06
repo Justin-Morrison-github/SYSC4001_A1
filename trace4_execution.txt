@@ -4,8 +4,8 @@
 97, 1, find vector 9 in memory position 0x0012
 98, 1, load address 0X036C into the PC
 99, 40, SYSCALL: run the ISR 9
-139, 100, transfer data from device to memory
-239, 16, check for errors
+139, 200, transfer data from device to memory
+339, -84, check for errors
 255, 1, IRET
 256, 10, Restore context
 266, 1, Switch to user mode
@@ -25,8 +25,8 @@
 507, 1, find vector 8 in memory position 0x0010
 508, 1, load address 0X06EF into the PC
 509, 40, SYSCALL: run the ISR 8
-549, 100, transfer data from device to memory
-649, 860, check for errors
+549, 200, transfer data from device to memory
+749, 760, check for errors
 1509, 1, IRET
 1510, 10, Restore context
 1520, 1, Switch to user mode
@@ -46,8 +46,8 @@
 2628, 1, find vector 12 in memory position 0x0018
 2629, 1, load address 0X03B9 into the PC
 2630, 40, SYSCALL: run the ISR 12
-2670, 100, transfer data from device to memory
-2770, 5, check for errors
+2670, 200, transfer data from device to memory
+2870, -95, check for errors
 2775, 1, IRET
 2776, 10, Restore context
 2786, 1, Switch to user mode
@@ -67,8 +67,8 @@
 2983, 1, find vector 1 in memory position 0x0002
 2984, 1, load address 0X029C into the PC
 2985, 40, SYSCALL: run the ISR 1
-3025, 100, transfer data from device to memory
-3125, -40, check for errors
+3025, 200, transfer data from device to memory
+3225, -140, check for errors
 3085, 1, IRET
 3086, 10, Restore context
 3096, 1, Switch to user mode
@@ -88,8 +88,8 @@
 3316, 1, find vector 19 in memory position 0x0026
 3317, 1, load address 0X0765 into the PC
 3318, 40, SYSCALL: run the ISR 19
-3358, 100, transfer data from device to memory
-3458, 512, check for errors
+3358, 200, transfer data from device to memory
+3558, 412, check for errors
 3970, 1, IRET
 3971, 10, Restore context
 3981, 1, Switch to user mode
