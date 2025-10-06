@@ -23,7 +23,7 @@ int main(int argc, char **argv)
 
     // Track current time
     int current_time = 0;
-    const int CONTEXT_SWITCH_TIME = 20;
+    const int CONTEXT_SWITCH_TIME = 30;
     const int IRET_RETURN_TIME = 1;
     const int ISR_EXECUTE_TIME = 40;
     const int DATA_TRANSFER_TIME = 40;
