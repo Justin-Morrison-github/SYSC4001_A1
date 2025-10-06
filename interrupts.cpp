@@ -25,7 +25,7 @@ int main(int argc, char **argv)
     int current_time = 0;
     const int CONTEXT_SWITCH_TIME = 10;
     const int IRET_RETURN_TIME = 1;
-    const int ISR_EXECUTE_TIME = 40;
+    const int ISR_EXECUTE_TIME = 100;
     const int DATA_TRANSFER_TIME = 40;
     char buffer[64]; // Buffer to store strings
     int delay;
@@ -59,17 +59,21 @@ int main(int argc, char **argv)
             {
                 execution += std::to_string(current_time) + ", " + std::to_string(ISR_EXECUTE_TIME) + ", SYSCALL: run the ISR " + std::to_string(duration_intr) + "\n";
                 current_time += ISR_EXECUTE_TIME;
+                delay += (ISR_EXECUTE_TIME - 40); // Add possible extra delay from slower ISR execution
                 execution += std::to_string(current_time) + ", " + std::to_string(DATA_TRANSFER_TIME) + ", transfer data from device to memory\n";
                 current_time += DATA_TRANSFER_TIME;
-                delay -= DATA_TRANSFER_TIME; // Remove the DATA_TRANSFER_TIME from like the example does
-                execution += std::to_string(current_time) + ", " + std::to_string(delay - ISR_EXECUTE_TIME) + ", check for errors\n";
+                delay += (DATA_TRANSFER_TIME - 40); // Add possible extra delay from slower data transfer
+                execution += std::to_string(current_time) + ", " + std::to_string(delay - ISR_EXECUTE_TIME - DATA_TRANSFER_TIME) + ", check for errors\n";
+                current_time += delay - ISR_EXECUTE_TIME - DATA_TRANSFER_TIME; // Divide the ISR into parts leaving out the already counted ones
             }
             else if (activity == "END_IO")
             {
                 execution += std::to_string(current_time) + ", " + std::to_string(ISR_EXECUTE_TIME) + ", " + "END_IO: run the ISR " + std::to_string(duration_intr) + "\n";
+                current_time += ISR_EXECUTE_TIME;
+                delay += (ISR_EXECUTE_TIME - 40);
                 execution += std::to_string(current_time) + ", " + std::to_string(delay - ISR_EXECUTE_TIME) + ", check device status\n";
+                current_time += delay - ISR_EXECUTE_TIME;
             }
-            current_time += delay - ISR_EXECUTE_TIME; // Add overhead for ISR execution time for testing
 
             // Execute IRET
             sprintf(buffer, "%d, %d, IRET\n", current_time, IRET_RETURN_TIME);
