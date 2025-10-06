@@ -61,14 +61,15 @@ int main(int argc, char **argv)
                 current_time += ISR_EXECUTE_TIME;
                 execution += std::to_string(current_time) + ", " + std::to_string(DATA_TRANSFER_TIME) + ", transfer data from device to memory\n";
                 current_time += DATA_TRANSFER_TIME;
-                execution += std::to_string(current_time) + ", " + std::to_string(delay) + ", check for errors\n";
+                delay -= DATA_TRANSFER_TIME;
+                execution += std::to_string(current_time) + ", " + std::to_string(delay - ISR_EXECUTE_TIME) + ", check for errors\n";
             }
             else if (activity == "END_IO")
             {
                 execution += std::to_string(current_time) + ", " + std::to_string(ISR_EXECUTE_TIME) + ", " + "END_IO: run the ISR " + std::to_string(duration_intr) + "\n";
-                execution += std::to_string(current_time) + ", " + std::to_string(delay) + ", check device status\n";
+                execution += std::to_string(current_time) + ", " + std::to_string(delay - ISR_EXECUTE_TIME) + ", check device status\n";
             }
-            current_time += delay; // Add overhead for ISR execution time for testing
+            current_time += delay - ISR_EXECUTE_TIME; // Add overhead for ISR execution time for testing
 
             // Execute IRET
             sprintf(buffer, "%d, %d, IRET\n", current_time, IRET_RETURN_TIME);
